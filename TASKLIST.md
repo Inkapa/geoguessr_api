@@ -58,7 +58,7 @@ Geoguessr 🌍
 │   │   ├── Season stats
 │   │   └── Next Season
 │   ├── Leaderboard
-│   ├── Events
+│   ├── Events ✅
 │   ├── Duels
 │   ├── City Streak
 │   ├── Battle Royal Countries
