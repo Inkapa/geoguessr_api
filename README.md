@@ -11,3 +11,5 @@
 
 This is an unofficial api wrapper for Geoguessr.com in python. This is still a very early WIP and 
 will be updated in the following days.
+
+# You can check out the current progress on the [TASKLIST](TASKLIST.md)
