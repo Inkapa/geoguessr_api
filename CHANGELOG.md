@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0
+
+Restructured ⚙️
+- Restructured models and client
+- Added TASKLIST for API coverage progress
+- Significant progress on API coverage
+
 ## 0.1.0
 
 Initial launch 🚀

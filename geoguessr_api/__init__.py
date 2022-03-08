@@ -2,8 +2,8 @@
 An unofficial async geoguessr API wrapper/bot
 .. include:: ../README.md
 """
-from .geoguessrSync import Client
-from .geoguessrAsync import AsyncClient
+from .geoguessr_sync import Client
+from .geoguessr_async import AsyncClient
 from .exceptions import *
 
 __docformat__ = "restructuredtext"

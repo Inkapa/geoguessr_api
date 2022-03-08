@@ -1,3 +1,11 @@
+import random
+from typing import Union
+
+from lxml import html
+import orjson
+from .models.user.identity import BaseUser, UserMinified
+
+
 class Objectify(dict):
     """ Dictionary subclass whose entries can be accessed by attributes
         (as well as normally).
@@ -17,3 +25,12 @@ class Objectify(dict):
 
         for key in self.keys():
             self[key] = from_nested_dict(self[key])
+
+
+def get_json(webpage: str):
+    root = html.fromstring(webpage)
+    data = root.xpath('//*[@id="__NEXT_DATA__"]/text()')[0]
+    return orjson.loads(data)
+
+
+
