@@ -5,7 +5,7 @@ import geoguessr_api
 import asyncio
 
 from models.enums import MapBrowseOption
-
+    
 username, password, token = load_env()
 
 

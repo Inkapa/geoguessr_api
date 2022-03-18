@@ -14,6 +14,7 @@ def test_sync_friends():
         client.remove_friend('604bca0a8c4d150001e73dc4')
         assert client.friendship_status('604bca0a8c4d150001e73dc4') == FriendStatus.NOT_FRIENDS
 
+
 async def test_async_friends():
     async with geoguessr_api.AsyncClient(username, password, token) as client:
         assert await client.friendship_status('604bca0a8c4d150001e73dc4') == FriendStatus.NOT_FRIENDS
@@ -21,6 +22,7 @@ async def test_async_friends():
         assert await client.friendship_status('604bca0a8c4d150001e73dc4') == FriendStatus.REQUEST_SENT
         await client.remove_friend('604bca0a8c4d150001e73dc4')
         assert await client.friendship_status('604bca0a8c4d150001e73dc4') == FriendStatus.NOT_FRIENDS
+
 
 if __name__ == '__main__':
     test_sync_friends()

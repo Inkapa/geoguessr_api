@@ -1,6 +1,7 @@
 class API:
     def __init__(self, version: int = 3):
         self.ROOT = "https://www.geoguessr.com/api"
+        self.GAME_BASE = "https://game-server.geoguessr.com/api"
         self.BASE = self.ROOT + f"/v{version}"
         self.BASEV4 = f"https://www.geoguessr.com/api/v4"  # Waiting for main version to go to 4
 
@@ -10,6 +11,7 @@ class API:
         self.SEARCH = "/search"
         self.SUBSCRIPTIONS = "/subscriptions"
 
+        self.LOBBY = self.GAME_BASE + '/lobby'
         self.COUNTRY_MAPS = self.ROOT + "/maps"
         self.EXPLORED = self.BASE + "/explorer"
         self.LIKES = self.BASE + "/likes"
@@ -17,6 +19,7 @@ class API:
         self.SCORES = self.BASE + "/scores"
         self.EXTENDED_STATS = self.BASEV4 + "/stats"
 
+        self.JOIN_RANDOM = self.LOBBY + '/join-random'
         self.EVENTS = self.BASE + "/competitions"
         self.EXPLORER = self.COUNTRY_MAPS + "/explorer"
         self.SIGNIN = self.BASE + self.ACCOUNTS + "/signin"
@@ -38,3 +41,4 @@ class API:
         self.CREATED_MAPS = self.PROFILES + "/maps"
 
         self.MAPS_POPULAR = self.MAPS_BROWSE + "/popular"
+

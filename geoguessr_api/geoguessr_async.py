@@ -334,3 +334,4 @@ class AsyncClient:
         slug = event if isinstance(event, str) else event.id
         results = await self.request(method=Method.GET, url=f"{self.api.EVENTS}/{slug}")
         return CompetitionResult.from_dict(results.get('competitionResult'))
+
