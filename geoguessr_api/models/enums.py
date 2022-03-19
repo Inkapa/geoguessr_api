@@ -46,3 +46,8 @@ class BadgeFetchType(Enum):
     OBTAINED = 2
     ALL = 3
 
+
+class GameType(Enum):
+    BATTLE_ROYALE__COUNTRIES = "BattleRoyaleCountries"
+    BATTLE_ROYALE_DISTANCE = "BattleRoyaleDistance"
+    DUELS = "Duels"
