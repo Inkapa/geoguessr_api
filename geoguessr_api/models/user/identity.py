@@ -37,11 +37,11 @@ class Email:
 class UserMinified(JSONWizard):
     url: str = json_field('userUrl')
     is_verified: bool = json_field('userIsVerified')
-    id: str = json_field('userId')
+    id: str = json_field(('userId', 'playerId'))
     nick: str = json_field(('name', 'userNick'))
     is_online: Optional[bool] = None
     pin: Optional[Pin] = None
-    _image_url: Optional[str] = json_field(('imageUrl', 'userPin'), default=None)
+    _image_url: Optional[str] = json_field(('imageUrl', 'userPin', 'avatarPath'), default=None)
 
     def __post_init__(self):
         if self._image_url and not self.pin:
@@ -49,6 +49,16 @@ class UserMinified(JSONWizard):
         elif not self._image_url and not self.pin:
             self.pin = Pin(url="", anchor='center-center', is_default=True)
 
+
+# TODO: What was I trying to do here again?
+# @dataclass
+# class PlayerMinified(UserMinified):
+#     level: int
+#     title_tier_id: int
+#     division: str
+#     performance_streak: str
+#     rank:
+#     team: Optional[str] = None
 
 @dataclass
 class UserMinifiedHighScore(UserMinified):
