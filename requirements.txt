@@ -1,0 +1,5 @@
+httpx~=0.23.0
+python-dotenv==0.20.0
+orjson~=3.6.7
+lxml~=4.9.0
+dataclass-wizard~=0.22.0
