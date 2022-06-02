@@ -118,7 +118,7 @@ class Client:
     def get_stats(self, user: Union[str, BaseUser, UserMinified] = None):
         if user:
             slug = user if isinstance(user, str) else user.id
-            stats = self.request(method=Method.GET, url=f"{self.api.USERS}/{slug}/stats")
+            stats = self.request(method=Method.GET, url=f"{self.api.BASE}{self.api.USERS}/{slug}/stats")
             extended_stats = self.request(method=Method.GET, url=f"{self.api.EXTENDED_STATS_USER}/{slug}")
         else:
             stats = self.request(method=Method.GET, url=self.api.STATS)
