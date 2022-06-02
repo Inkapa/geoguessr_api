@@ -1,20 +1,35 @@
-from dataclasses import dataclass, field
-from typing import Optional, List, Any
-from dataclass_wizard import JSONWizard, json_field
+from dataclasses import dataclass
+from typing import Optional, List, Any, Union
+from dataclass_wizard import JSONWizard
 from ..user.identity import BaseUser
 from ..enums import GameType
 
 
 @dataclass
-class GameOptions:
-    initial_health: int
+class GameBase:
     round_time: int
     forbid_moving: bool
     forbid_zooming: bool
     forbid_rotating: bool
     map_slug: str
+
+
+@dataclass
+class GameDuels(GameBase):
+    initial_health: int
     disable_multipliers: bool
     disable_healing: bool
+
+
+@dataclass
+class GameDistance(GameBase):
+    initial_lives: int
+
+
+@dataclass
+class GameCountries(GameDistance):
+    power_up_5050: bool
+    power_up_spy: bool
 
 
 @dataclass
@@ -36,11 +51,11 @@ class Game(JSONWizard):
     can_be_started_manually: bool
     is_rated: bool
     competition_id: str
-    game_options: GameOptions
+    game_options: Union[GameDistance, GameCountries, GameDuels]
     created_at: str
     share_link: str
     host_participate: bool
-    closing_time: Optional[Any] = None
+    closing_time: Optional[str] = None
     host: Optional[Any] = None  # Probably BaseUser
     party_id: Optional[str] = None
     group_event_id: Optional[str] = None
