@@ -14,6 +14,7 @@ def sync_browse_maps():
         perso_map = client.browse_maps()
         client.like_map(perso_map)  # id as str, SearchMap and Map objects are accepted
         assert client.is_map_liked(perso_map)
+        client.unlike_map(perso_map)
         recommended_maps = client.browse_maps(reference_map_id=perso_map, count=5, page=0)
         for recommended_map in recommended_maps:
             print(f'RECOMMENDED BASED ON MAP {perso_map.name}:', recommended_map.name)
@@ -30,6 +31,7 @@ async def async_browse_maps():
         perso_map = await client.browse_maps()
         await client.like_map(perso_map)
         assert await client.is_map_liked(perso_map)
+        await client.unlike_map(perso_map)
         recommended_maps = await client.browse_maps(reference_map_id=perso_map, count=5, page=0)
         for recommended_map in recommended_maps:
             print(f'RECOMMENDED BASED ON MAP {perso_map.name}:', recommended_map.name)
