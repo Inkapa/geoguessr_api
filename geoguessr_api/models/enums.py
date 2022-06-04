@@ -51,3 +51,15 @@ class GameType(Enum):
     BATTLE_ROYALE__COUNTRIES = "BattleRoyaleCountries"
     BATTLE_ROYALE_DISTANCE = "BattleRoyaleDistance"
     DUELS = "Duels"
+    ALL = "AllGameModes"
+
+
+class LeaderboardType(Enum):
+    GLOBAL = 1
+    CLIENT = 2
+    FRIENDS = 3
+
+class SeasonType(Enum):
+    CURRENT = 1
+    PREVIOUS = 2
+    # NEXT = 3
