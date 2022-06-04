@@ -54,10 +54,12 @@ Geoguessr 🌍
 │       ├── Browse personalized ✅
 │       └── Browse countries ✅
 ├── Competitive
-│   ├── Season
-│   │   ├── Season stats
-│   │   └── Next Season
-│   ├── Leaderboard
+│   ├── Season ✅
+│   │   ├── Season Ranking ✅
+│   │   ├── Previous Season ✅
+│   │   ├── Current Season ✅
+│   │   └── Next Season (?)
+│   ├── Leaderboard ✅
 │   ├── Events ✅
 │   ├── Duels
 │   ├── City Streak
@@ -70,11 +72,20 @@ Geoguessr 🌍
 │   ├── Edit Party
 │   └── etc... TODO
 ├── Classic
-│   ├── Explorer mode
+│   ├── Explorer mode ✅
 │   ├── Streaks
 │   ├── Daily Challenge
 │   ├── Pro Leagues
-│   └── Explorer maps ✅
+│   ├── Explorer maps ✅
+│   └── Game
+│       ├── Start game from map
+│       │   └── Play game
+│       ├── Get game results
+│       └── Challenge
+│           ├── Create Challenge from map ✅
+│           ├── Invite friends ✅
+│           ├── Get challenge info ✅
+│           └── Get challenge results
 ├── Search ☑
 │   ├── Search maps ✅
 │   ├── Search people ✅
@@ -98,8 +109,12 @@ Geoguessr 🌍
 │   └── TODO
 ├── Streams
 │   └── TODO
-└── Mapillary Free version
-    └── TODO
+├── Mapillary Free version
+│   └── TODO
+└── Quiz
+    ├── Join quiz
+    ├── Create quiz
+    └── etc... TODO
 ```
 
 
@@ -146,10 +161,12 @@ Geoguessr 🌍
 ### Browse countries ✅
 
 # Competitive
-## Season
-### Season stats
-### Next Season
-## Leaderboard
+## Season ✅
+### Season Ranking ✅
+### Previous Season ✅
+### Current Season ✅
+### Next Season (?)
+## Leaderboard ✅
 ## Events ✅
 ## Duels
 ## City Streak
@@ -164,11 +181,19 @@ Geoguessr 🌍
 ## etc... TODO
 
 # Classic
-## Explorer mode
+## Explorer mode ✅
 ## Streaks
 ## Daily Challenge
 ## Pro Leagues
 ## Explorer maps ✅
+## Game
+### Start game from map
+#### Play game
+### Get game results
+### Challenge
+#### Create Challenge from map ✅
+#### Invite friends ✅
+#### Get challenge info ✅
 
 # Search ☑
 ## Search maps ✅
@@ -199,4 +224,10 @@ Geoguessr 🌍
 
 # Mapillary Free version
 ## TODO
+
+# Quiz
+## Join quiz
+## Create quiz
+## etc... TODO
+
 ```
