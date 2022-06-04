@@ -82,16 +82,17 @@ class UserStats(JSONWizard):
     streak_records: Optional[List[StreakRecordList]] = None
 
 
+@dataclass
 class UserExtendedStats(UserStats):
-    battle_royale_rank: Rank
-    battle_royale_distance: GameStats
-    battle_royale_country: GameStats
-    battle_royale_medals: MedalCount
-    competitive_city_streaks: GameStats
-    competitive_streaks_rank: Rank
-    competitive_streaks_medals: MedalCount
-    duels: GameStats
-    duels_rank: Rank
-    duels_medals: MedalCount
-    life_time_xp_progression: LifeTimeXpProgression
-    total_medals: MedalCount
+    battle_royale_rank: Optional[Rank] = None
+    battle_royale_distance: Optional[GameStats] = None
+    battle_royale_country: Optional[GameStats] = None
+    battle_royale_medals: Optional[MedalCount] = None
+    competitive_city_streaks: Optional[GameStats] = None
+    competitive_streaks_rank: Optional[Rank] = None
+    competitive_streaks_medals: Optional[MedalCount] = None
+    duels: Optional[GameStats] = None
+    duels_rank: Optional[Rank] = None
+    duels_medals: Optional[MedalCount] = None
+    life_time_xp_progression: Optional[LifeTimeXpProgression] = None
+    total_medals: Optional[MedalCount] = None
