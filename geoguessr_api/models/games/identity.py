@@ -44,8 +44,8 @@ class Game(JSONWizard):
     min_players_required: int
     player_ids: List[str]
     players: List[BaseUser]
-    visibility: str  # Maybe Enum later
-    time_stamp: str
+    visibility: str  # TODO: Maybe Enum later
+    timestamp: str
     owner: str
     is_auto_started: bool
     can_be_started_manually: bool
