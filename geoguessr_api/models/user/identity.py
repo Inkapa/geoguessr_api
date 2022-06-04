@@ -32,18 +32,19 @@ class Email:
     is_email_changeable: bool
     is_email_verified: bool
 
-
 @dataclass
 class UserMinified(JSONWizard):
-    url: str = json_field('userUrl')
     is_verified: bool = json_field('userIsVerified')
     id: str = json_field(('userId', 'playerId'))
     nick: str = json_field(('name', 'userNick'))
+    url: str = json_field('userUrl', default=None)
     is_online: Optional[bool] = None
     pin: Optional[Pin] = None
-    _image_url: Optional[str] = json_field(('imageUrl', 'userPin', 'avatarPath'), default=None)
+    _image_url: Optional[str] = json_field(('imageUrl', 'userPin', 'avatarPath', 'avatar'), default=None)
 
     def __post_init__(self):
+        if self.url is None:
+            self.url = f'/user/{self.id}'
         if self._image_url and not self.pin:
             self.pin = Pin(url=self._image_url, anchor='center-center', is_default=False)
         elif not self._image_url and not self.pin:
@@ -59,6 +60,21 @@ class UserMinified(JSONWizard):
 #     performance_streak: str
 #     rank:
 #     team: Optional[str] = None
+
+@dataclass
+class UserLeaderboardRanking(UserMinified):
+    position: Optional[int] = 0
+    rating: Optional[int] = 0
+
+@dataclass
+class UserSeasonRanking(UserMinified):
+    position: Optional[int] = 0
+    played: Optional[int] = 0
+    points: Optional[int] = 0
+    average_time: Optional[float] = 0.0
+    first: Optional[int] = 0
+    second: Optional[int] = 0
+    third: Optional[int] = 0
 
 @dataclass
 class UserMinifiedHighScore(UserMinified):
