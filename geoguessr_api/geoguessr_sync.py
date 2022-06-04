@@ -1,16 +1,20 @@
 import random
-from typing import Union
+from json import JSONDecodeError
+from typing import Union, List
 
 import httpx
 
 from models.achievements import Achievements, Badge
+from models.challenge import ChallengeGame, Challenge
 from models.events import Event, CompetitionResult
 from models.maps.identity import Map, ExplorerMaps, ExploredMaps
 from models.maps.search import SearchMap
+from models.season import Season
 from models.subscription import Subscription, Invoice
-from models.user.identity import Me, BaseUser, UserMinified, UserHighscores
+from models.user.identity import Me, BaseUser, UserMinified, UserHighscores, UserLeaderboardRanking, UserSeasonRanking
 from models.user.stats import UserExtendedStats
-from models.enums import Method, FriendStatus, SearchOption, MapBrowseOption, BadgeFetchType
+from models.enums import Method, FriendStatus, SearchOption, MapBrowseOption, BadgeFetchType, LeaderboardType, \
+    SeasonType, GameType
 from .exceptions import Forbidden, NotFound, GeoguessrException, BadRequest
 from .endpoints import API
 
@@ -98,7 +102,10 @@ class Client:
         elif request.status_code == 404:
             raise NotFound(404, request.url, request.json().get('message'))
         else:
-            return request.json() if return_json else request  # TODO: Handle 5xx and other 4xx
+            try:
+                return request.json() if return_json else request  # TODO: Handle 5xx and other 4xx
+            except JSONDecodeError:
+                return request
 
     def refresh_profile(self):
         profile_info = self.request(method=Method.GET, url=self.api.PROFILES)
@@ -293,9 +300,17 @@ class Client:
         highscores = self.request(method=Method.GET, url=f"{self.api.SCORES}/{slug}")
         return UserHighscores.from_dict(highscores)
 
-    def get_explorer(self):
+    def get_explorer(self, query: str = None):
         maps = self.request(method=Method.GET, url=self.api.EXPLORER)
-        return ExplorerMaps.from_list(maps)
+        if (query is None) or (query == ''):
+            return ExplorerMaps.from_list(maps)
+        country = next((
+            country for country in maps
+            if country['slug'] == query.lower()
+            or country['name'].lower() == query.lower()
+            or country['countryCode'].lower() == query.lower()
+        ), None)
+        return ExplorerMaps.from_dict(country) if country else None
 
     def get_explored_countries(self, user: Union[str, BaseUser, UserMinified] = None):
         all_countries = self.request(method=Method.GET, url=self.api.EXPLORER)
@@ -333,3 +348,75 @@ class Client:
         slug = event if isinstance(event, str) else event.id
         results = self.request(method=Method.GET, url=f"{self.api.EVENTS}/{slug}")
         return CompetitionResult.from_dict(results.get('competitionResult'))
+
+    def get_leaderboard(self, type: LeaderboardType = LeaderboardType.GLOBAL, offset: int = 0, limit: int = 15):
+        query = {'offset': offset, 'limit': limit}
+        if type == LeaderboardType.CLIENT:
+            leaderboard = self.request(method=Method.GET, url=f"{self.api.RATINGS}/me", params=query)
+        elif type == LeaderboardType.FRIENDS:
+            leaderboard = self.request(method=Method.GET, url=f"{self.api.RATINGS}/friends", params=query)
+        else:
+            leaderboard = self.request(method=Method.GET, url=self.api.RATINGS, params=query)
+
+        return UserLeaderboardRanking.from_list(leaderboard) if leaderboard else None
+
+    def get_season(self, type: SeasonType = SeasonType.CURRENT):
+        if type == SeasonType.PREVIOUS:
+            request = self.request(method=Method.GET, url=f"{self.api.SEASONS}/previous")
+            season = request["season"]
+        else:
+            season = self.request(method=Method.GET, url=f"{self.api.SEASONS}/active")
+        return Season.from_dict(season)
+
+    def get_season_leaderboard(
+            self,
+            season: Union[str, Season],
+            mode: GameType = GameType.ALL,
+            type: LeaderboardType = LeaderboardType.GLOBAL,
+            week: int = 0,
+            offset: int = 0,
+            limit: int = 15):
+        query = {'type': mode.value, 'week': week, 'offset': offset, 'limit': limit}
+        slug = season if isinstance(season, str) else season.id
+        if type == LeaderboardType.CLIENT:
+            leaderboard = self.request(method=Method.GET, url=f"{self.api.SEASONS}/{slug}/toplists/me",
+                                             params=query)
+        elif type == LeaderboardType.FRIENDS:
+            leaderboard = self.request(method=Method.GET, url=f"{self.api.SEASONS}/{slug}/toplists/friends",
+                                             params=query)
+        else:
+            leaderboard = self.request(method=Method.GET, url=f"{self.api.SEASONS}/{slug}/toplists", params=query)
+
+        return UserSeasonRanking.from_list(leaderboard) if leaderboard else None
+
+    def get_challenge(self, challenge: Union[str, ChallengeGame]):
+        slug = challenge if isinstance(challenge, str) else challenge.token
+        challenge = self.request(method=Method.GET, url=f"{self.api.CHALLENGES}/{slug}")
+        challenge_wrapper = {**challenge['challenge'], "map": challenge['map'], "creator": challenge['creator']}
+        return Challenge.from_dict(challenge_wrapper)
+
+    def create_challenge(
+            self,
+            map: Union[str, SearchMap, Map, ExplorerMaps],
+            moving: bool = True,
+            rotating: bool = True,
+            zooming: bool = True,
+            time: int = 0):
+        slug = map if isinstance(map, str) else map.slug
+        token = self.request(method=Method.POST, url=f"{self.api.CHALLENGES}", json={
+            'map': slug,
+            'forbidMoving': moving,
+            'forbidRotating': rotating,
+            'forbidZooming': zooming,
+            'timeLimit': time
+        })
+        return self.get_challenge(token['token'])
+
+    def invite_challenge(
+            self,
+            challenge: Union[str, ChallengeGame],
+            users: List[Union[str, BaseUser, UserMinified]]):
+        slug = challenge if isinstance(challenge, str) else challenge.token
+        user_ids = [user if isinstance(user, str) else user.id for user in users]
+
+        self.request(method=Method.POST, url=f"{self.api.CHALLENGES}/{slug}/invite", json={'userIds': user_ids})
