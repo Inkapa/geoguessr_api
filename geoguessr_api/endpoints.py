@@ -17,9 +17,11 @@ class API:
         self.LIKES = self.BASE + "/likes"
         self.PROFILES = self.BASE + "/profiles"
         self.SCORES = self.BASE + "/scores"
+        self.CHALLENGES = self.BASE + "/challenges"
         self.EXTENDED_STATS = self.BASEV4 + "/stats"
+        self.SEASONS = self.BASEV4 + "/seasons"
 
-        self.JOIN_RANDOM = self.LOBBY + '/join-random'
+        self.JOIN_RANDOM = self.LOBBY + '/join-random'  # TODO: Duels
         self.EVENTS = self.BASE + "/competitions"
         self.EXPLORER = self.COUNTRY_MAPS + "/explorer"
         self.SIGNIN = self.BASE + self.ACCOUNTS + "/signin"
@@ -30,6 +32,7 @@ class API:
         self.MAPS = self.BASE + self.SOCIAL + "/maps"
         self.BADGES = self.BASE + self.SOCIAL + "/badges"
         self.INVOICES = self.BASE + self.SUBSCRIPTIONS + "/invoices"
+        self.RATINGS = self.BASE + self.USERS + "/ratings"
 
         self.EXPLORED_BY_USER = self.EXPLORED + "/user"
         self.EXTENDED_STATS_USER = self.EXTENDED_STATS + self.USERS
