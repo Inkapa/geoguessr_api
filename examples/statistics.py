@@ -21,6 +21,8 @@ def sync_stats():
             else:
                 user = client.get_user(yellow)  # Get full User object through UserMinified object or through id as str
                 print(f"{yellow.nick}'s BR level:", user.br.level)
+                user_stats = client.get_stats(user)
+                print(f"{yellow.nick}'s Duel streaks:", user_stats.duels.streak)
 
 
 async def async_stats():
@@ -34,6 +36,9 @@ async def async_stats():
             else:
                 user = await client.get_user(yellow)
                 print(f"{yellow.nick}'s BR level:", user.br.level)
+                user_stats = await client.get_stats(user)
+                print(f"{yellow.nick}'s Duel streaks:", user_stats.duels.streak)
+
 
 
 if __name__ == '__main__':
