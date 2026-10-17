@@ -12,6 +12,8 @@
 This is an unofficial api wrapper for Geoguessr.com in python. This is still a very early WIP and 
 will be updated in the following days.
 
+***The repo is currently archived as I haven't updated it in multiple years. The Geoguessr architecture has likely changed since then, and I am not currently disposed to work through updating it***
+
 ## ℹ️ What is this?
 This is a quick archive of my current progress. It is a list of the parts of geoguessr's website that have been implemented so far
 and a list of the ones remaining. 
